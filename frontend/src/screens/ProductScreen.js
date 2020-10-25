@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,28 +8,26 @@ import {
   ListGroup,
   Card,
   Button,
-  ListGroupItem,
   Form,
 } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { listProductDetails } from '../actions/productActions';
+import SelectQuantity from '../components/SelectQuantity';
+// import { listProductDetails } from '../actions/productActions';
+import { addToCart } from '../actions/cartActions';
 
-const ProductScreen = ({ history, match }) => {
-  const [qty, setQty] = useState(0);
+const ProductScreen = ({ history, props }) => {
+  const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
-  useEffect(() => {
-    dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match]);
-
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    dispatch(addToCart(product._id, qty));
+    props.history.push('/cart');
   };
 
   return (
@@ -85,24 +83,19 @@ const ProductScreen = ({ history, match }) => {
                 </ListGroup.Item>
 
                 {product.countInStock > 0 && (
-                  <ListGroupItem>
+                  <ListGroup.Item>
                     <Row>
                       <Col>Qty</Col>
                       <Col>
-                        <Form.Control
-                          as='select'
-                          value={qty}
-                          onChange={(e) => setQty(e.target.value)}
-                        >
-                          {[...Array(product.countInStock).keys()].map((x) => (
-                            <option key={x + 1} value={x + 1}>
-                              {x + 1}
-                            </option>
-                          ))}
-                        </Form.Control>
+                        <SelectQuantity
+                          from={1}
+                          to={product.countInStock}
+                          qty={qty}
+                          handleChangeQty={setQty}
+                        />
                       </Col>
                     </Row>
-                  </ListGroupItem>
+                  </ListGroup.Item>
                 )}
 
                 <ListGroup.Item>
