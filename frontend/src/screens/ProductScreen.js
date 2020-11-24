@@ -27,7 +27,7 @@ const ProductScreen = ({ history, props }) => {
 
   const addToCartHandler = () => {
     dispatch(addToCart(product._id, qty));
-    props.history.push('/cart');
+    history.push('/cart');
   };
 
   return (
