@@ -16,13 +16,13 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('API is running....still');
-});
-
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+
+app.get('/', (req, res) => {
+  res.send('API is running....still');
+});
 
 // error handling middleware
 app.use(notFound);

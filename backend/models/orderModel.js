@@ -29,9 +29,10 @@ const orderSchema = mongoose.Schema(
     paymentMethod: {
       type: String,
       required: true,
+      default: 'PayPal',
     },
     paymentResult: {
-      id: { type: String, required: true },
+      id: { type: String },
       status: { type: String },
       update_time: { type: String },
       email_address: { type: String },
