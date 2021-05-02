@@ -92,6 +92,7 @@ const ProfileScreen = ({ history }) => {
                 placeholder='Enter password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autocomplete='off'
               ></Form.Control>
             </Form.Group>
 
@@ -102,6 +103,7 @@ const ProfileScreen = ({ history }) => {
                 placeholder='Confirm password'
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                autocomplete='off'
               ></Form.Control>
             </Form.Group>
 
@@ -132,8 +134,8 @@ const ProfileScreen = ({ history }) => {
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key={order.id}>
-                  <td>{order.id}</td>
+                <tr key={order._id}>
+                  <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
                   <td>${order.totalPrice.toFixed(2)}</td>
                   <td>
@@ -151,7 +153,7 @@ const ProfileScreen = ({ history }) => {
                     )}
                   </td>
                   <td>
-                    <LinkContainer to={`/orders/${order._id}`}>
+                    <LinkContainer to={`/order/${order._id}`}>
                       <Button className='btn-sm' variant='light'>
                         Details
                       </Button>
